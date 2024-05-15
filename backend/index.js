@@ -47,6 +47,17 @@ app.get("/books", async (request, response) => {
     }
 })
 
+app.get("/books/:id", async (request, response) => {
+    try {
+        const { id } = request.params
+        const book = await Book.findById(id)
+        return response.status(200).json(book)
+    } catch (error) {
+        console.log(error.message)
+        return response.status(500).send({"Error" : error.message})
+    }
+})
+
 mongoose.connect(MONGO_URI)
     .then(() => {
         console.log('Connection to DB successful')
