@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {request, response} from 'express';
 import {PORT, MONGO_URI} from "./config.js";
 import mongoose from 'mongoose';
 import {Book} from "./models/bookModel.js";
@@ -44,8 +44,21 @@ app.get("/books", async (request, response) => {
         });
     } catch (error) {
         console.log(error.message)
+        return response.status(500).send({"Error" : error.message})
     }
 })
+
+app.get("/books/:id", async (request, response) => {
+    try {
+        const { id } = request.params
+        const book = await Book.findById(id)
+        return response.status(200).json(book)
+    } catch (error) {
+        console.log(error.message)
+        return response.status(500).send({"Error" : error.message})
+    }
+})
+
 
 mongoose.connect(MONGO_URI)
     .then(() => {
