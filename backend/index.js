@@ -15,7 +15,10 @@ app.get("/ping", (request, response) => {
 
 app.post("/addBook", async (request, response) => {
     try {
-        if (!request.body.title || !request.body.author || !request.body.year) {
+        if (!request.body.title ||
+            !request.body.author ||
+            !request.body.year
+        ) {
             console.log("One of the required fields is missing in the request body")
             return response.status(400).send({"Response" : "Required Field is Missing"});
         }
@@ -30,8 +33,6 @@ app.post("/addBook", async (request, response) => {
         console.log(error)
         return response.status(500).send({"Error" : "Failed to Add Book"})
     }
-
-
 })
 
 mongoose.connect(MONGO_URI)
@@ -43,6 +44,7 @@ mongoose.connect(MONGO_URI)
 
     })
     .catch((error) => {
+        console.log("Error establishing connection")
         console.log(error)
     });
 
