@@ -59,7 +59,6 @@ app.get("/books/:id", async (request, response) => {
     }
 })
 
-
 mongoose.connect(MONGO_URI)
     .then(() => {
         console.log('Connection to DB successful')
